@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
-	//test commit
+	//test commit 2
 	private Button btnStart;
 	private Button btnNewWord;
 
