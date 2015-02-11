@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Szotar_proba</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="start">Start</string>
+    <string name="uj_szo_felvitele">Uj szo felvitele</string>
+    <string name="kezdes">Kezdes</string>
+    <string name="eng_word">Angol kifejezés</string>
+    <string name="hun_word">Magyar kifejezés</string>
+    <string name="felvitel">Felvitel</string>
+    <string name="title_activity_questioner">Questioner</string>
+    <string-array name="diffValues">
+		<item >1</item>
+        <item >2</item>
+        <item >3</item>
+        <item >4</item>
+        <item >5</item>
+    </string-array>
+        <string name="megoldas">megoldas</string>
+        <string name="kovetkezo">Kovetkezo</string>
+        <string name="ellenorzes">Ellenorzes</string>
+
+</resources>
