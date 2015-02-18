@@ -2,6 +2,7 @@ package hu.sbenkovi.szotar_proba.db;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,16 +19,19 @@ public class DictionaryDBAdapter {
 		helper = DictionaryHelper.getInstance(context);
 	}
 
-	public long insertData(String engWord, String hunWord, int difficulty) {
+	public long insertData(String engWord, String hunWord, int difficulty, int ratio) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(DictionaryHelper.ENGWORD, engWord);
 		contentValues.put(DictionaryHelper.HUNWORD, hunWord);
 		contentValues.put(DictionaryHelper.DIFFICULTY, difficulty);
-		return db.insert(DictionaryHelper.TABLE_NAME, null, contentValues);
+		contentValues.put(DictionaryHelper.RATIO, ratio);
+		long result = db.insert(DictionaryHelper.TABLE_NAME, null, contentValues);
+		db.close();
+		return result;
 	}
 
-	public Map<String, String> getAllData() {
+	public Map<String, String> getAllWords() {
 		Map<String, String> result = new HashMap<String, String>();
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] columns = { DictionaryHelper.ENGWORD, DictionaryHelper.HUNWORD };
@@ -37,15 +41,25 @@ public class DictionaryDBAdapter {
 			String engWord = cursor.getString(engWordColIndex);
 			int hunWordColIndex = cursor.getColumnIndex(DictionaryHelper.HUNWORD);
 			String hunWord = cursor.getString(hunWordColIndex);
-			result.put(engWord, hunWord);
+			if(shouldReverse()) {
+				result.put(hunWord, engWord);
+			} else {
+				result.put(engWord, hunWord);
+			}
 		}
 		return result;
+	}
+
+	private boolean shouldReverse() {
+		Random random = new Random();
+		int i = random.nextInt(99);
+		return i % 3 == 0;
 	}
 
 	static class DictionaryHelper extends SQLiteOpenHelper {
 		private static final String DATABASE_NAME = "dictionary.db";
 		private static final String TABLE_NAME = "WORDS";
-		private static final int DATABASE_VERSION = 1;
+		private static final int DATABASE_VERSION = 6;
 		private static final String UID = "_id";
 		private static final String ENGWORD = "EngWord";
 		private static final String HUNWORD = "HunWord";
@@ -53,7 +67,7 @@ public class DictionaryDBAdapter {
 		private static final String RATIO = "Ratio";
 		private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + UID
 		        + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ENGWORD + " VARCHAR(255), " + HUNWORD + " VARCHAR(255), "
-		        + DIFFICULTY + " INTEGER, " + RATIO + " INTEGER));";
+		        + DIFFICULTY + " INTEGER, " + RATIO + " INTEGER);";
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 		private final Context context;
 		private static DictionaryHelper helperInstance;

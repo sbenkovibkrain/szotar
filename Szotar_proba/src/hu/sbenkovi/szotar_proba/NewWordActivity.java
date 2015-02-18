@@ -44,19 +44,21 @@ public class NewWordActivity extends Activity implements OnItemSelectedListener 
 
 			@Override
 			public void onClick(View v) {
-				addUser(v);
+				addNewWord(v);
 			}
 		});
 	}
 
-	public void addUser(View view) {
+	public void addNewWord(View view) {
 		String engWord = etEngWord.getText().toString();
 		String hunWord = etHunWord.getText().toString();
-		long id = dictionaryAdapter.insertData(engWord, hunWord, currentDiffSel);
+		long id = dictionaryAdapter.insertData(engWord, hunWord, currentDiffSel, 0);
 		if(id < 0) {
-			Message.message(this, "Unsuccessful");
+			Message.message(this, "Sikertelen adatfelvitel.");
 		} else {
-			Message.message(this, "Successfully inserted a row");
+			Message.message(this, "Sikeres adatfelvitel.");
+			etEngWord.setText("");
+			etHunWord.setText("");
 		}
 	}
 

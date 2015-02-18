@@ -1,9 +1,6 @@
 package hu.sbenkovi.szotar_proba;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -55,23 +52,6 @@ public class MainActivity extends Activity {
 	private void showNewWordActivity() {
 		startActivity(new Intent(this, NewWordActivity.class));
 		overridePendingTransition(R.anim.left_in, R.anim.right_out);
-	}
-
-	private void alert() {
-		if(getSharedPreferences("NODE", 0).getBoolean("SHOW", true)) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Udv!").setTitle("Inditas").setCancelable(false)
-			        .setPositiveButton("OK", new OnClickListener() {
-
-				        @Override
-				        public void onClick(DialogInterface dialog, int which) {
-					        getSharedPreferences("NODE", 0).edit().putBoolean("SHOW", false).commit();
-				        }
-			        });
-			//builder.setCancelable(true) ==>modal or not
-			AlertDialog dialog = builder.create();
-			dialog.show();
-		}
 	}
 
 	@Override
